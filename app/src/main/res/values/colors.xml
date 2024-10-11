@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="light_pink">#BD9C9E</color>
+    <color name="dark_pink">#AB2452</color> <!-- Changed to lowercase -->
+    <color name="primary_color">#BD9C9E</color>
+    <color name="light_green">#A5FC83</color> <!-- Added missing '#' -->
+</resources>

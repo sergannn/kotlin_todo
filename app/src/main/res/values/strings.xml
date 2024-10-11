@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Leafboard</string>
+    <string name="hint_title_txt">Enter the title</string>
+    <string name="description_hint_txt">Enter the description</string>
+    <string name="card_description_sample">Take 3 minutes to practice deep breathing exercises, focusing on each inhale and exhale to promote relaxation and mental clarity.</string>
+    <string name="sample_title">Mindful Breathing:</string>
+    <string name="recent_task_title">No Recent Tasks</string>
+    <string name="no_recent_task_content">Tap Add New button for navigate to add new task page</string>
+    <string name="delete_btn_txt">Delete</string>
+    <string name="cancel_btn_txt">Cancel</string>
+    <string name="delete_popup_title">Delete Note</string>
+    <string name="delete_popup_description">Do you want to delete this note?</string>
+    <string name="search_txt">Search</string>
+    <string name="leafboard">Leafboard</string> <!-- Updated -->
+    <string name="splash_screen_txt">Empowering your productivity, one task at a time.</string> <!-- Updated -->
+    <string name="onboard_txt">Achieve more with ToDo</string> <!-- Updated -->
+    <string name="onboard_screen_para">Seamless organization leads to unstoppable productivity, helping you reach your goals faster and easier than ever before.</string> <!-- Updated -->
+    <string name="onboard_txt_next">Get things done, without limits.</string>
+    <string name="todo_list_txt">ToDo List..</string> <!-- Updated -->
+</resources>
