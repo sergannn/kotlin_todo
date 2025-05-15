@@ -61,7 +61,7 @@ class EditTaskScreen : AppCompatActivity() {
 
         taskViewModel.updateTask(editedTask)
         Toast.makeText(this, "Task updated successfully", Toast.LENGTH_SHORT).show()
-        startActivity(Intent(this, HomeScreen::class.java))
+      //  startActivity(Intent(this, HomeScreen::class.java))
         finish()
     }
 
@@ -111,7 +111,7 @@ class EditTaskScreen : AppCompatActivity() {
         dialog.setContentView(R.layout.delete_confromation_popup)
         dialog.findViewById<Button>(R.id.ok_btn).setOnClickListener {
             taskViewModel.deleteTask(Task(id = taskId, taskTitle = "", taskDescription = "", dueDate = "", dueTime = ""))
-            startActivity(Intent(this, HomeScreen::class.java))
+           // startActivity(Intent(this, HomeScreen::class.java))
             finish()
         }
         dialog.findViewById<Button>(R.id.cancel_btn).setOnClickListener { dialog.dismiss() }

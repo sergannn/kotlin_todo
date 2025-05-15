@@ -1,18 +1,25 @@
 package com.example.todoapp.adapter
 
-
 import com.example.todoapp.model.Task
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
 import com.example.todoapp.modules.EditTaskScreen
-import android.content.Intent
+import com.example.todoapp.viewModel.TaskViewModel
 
-class TaskAdapter(private var tasks: List<Task>, private val activity: AppCompatActivity) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private var tasks: List<Task>, private val context: Context?) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+   // private lateinit var taskViewModel: TaskViewModel
+    private val taskViewModel: TaskViewModel by lazy {
+        ViewModelProvider((context as? AppCompatActivity)?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment_activity_main) ?: error("Activity not found")).get(TaskViewModel::class.java)
+    }
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.task_title)
@@ -21,14 +28,22 @@ class TaskAdapter(private var tasks: List<Task>, private val activity: AppCompat
         val dueTimeView: TextView = itemView.findViewById(R.id.timeView)
 
         init {
-            // Set click listener for each task item to open EditTaskScreen
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val task = tasks[position]
-                    val intent = Intent(activity, EditTaskScreen::class.java)
-                    intent.putExtra("taskId", task.id)
-                    activity.startActivity(intent)
+                //        tasks.drop(position)
+//                    taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+
+                    taskViewModel.deleteTask(task)
+                    taskViewModel.getAllTasks { tasks ->
+                        updateTasks(tasks)
+                    }
+               //     Log.d("ser",task.toString());
+              //     updateTasks(tasks)
+
+                //    val action = CurrentFragmentDirections.actionToEditTaskFragment(task.id)
+                //    findNavController().navigate(action)
                 }
             }
         }
@@ -51,10 +66,8 @@ class TaskAdapter(private var tasks: List<Task>, private val activity: AppCompat
         return tasks.size
     }
 
-    // Function to update the task list and notify the adapter about the data change
     fun updateTasks(newTasks: List<Task>) {
         tasks = newTasks
         notifyDataSetChanged()
     }
 }
-

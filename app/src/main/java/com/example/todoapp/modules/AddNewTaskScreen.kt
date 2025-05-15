@@ -1,5 +1,6 @@
 package com.example.todoapp.modules
 
+import HomeFragment
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -23,10 +24,13 @@ class AddNewTaskScreen : AppCompatActivity() {
     private var dueDate: String = ""
     private var dueTime: String = ""
     private val calendar = Calendar.getInstance()
+    private var homeFragment: HomeFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Get reference to HomeFragment
+        homeFragment = supportFragmentManager.findFragmentByTag("HomeFragment") as? HomeFragment
 
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -96,7 +100,14 @@ class AddNewTaskScreen : AppCompatActivity() {
 
         taskViewModel.insertTask(task)
         Toast.makeText(this, "Task Created Successfully", Toast.LENGTH_SHORT).show()
-        startActivity(Intent(this, HomeScreen::class.java))
+        Toast.makeText(this, "Task Created Successfully", Toast.LENGTH_SHORT).show()
+
+        // Refresh HomeFragment if it exists
+//        homeFragment?.refreshScreen()
+
+      //   updateTasks(tasks)
+      //  startActivity(Intent(this, HomeScreen::class.java))
         finish()
     }
+
 }

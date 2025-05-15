@@ -1,5 +1,6 @@
 package com.example.todoapp
 
+import HomeFragment
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,28 +8,42 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.enableEdgeToEdge
-import com.example.todoapp.modules.HomeScreen
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+//import com.example.todoapp.modules.HomeScreen
 import com.example.todoapp.modules.OnboardingScreen01
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.todoapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //setSupportActionBar()
+        setSupportActionBar(binding.toolbar) // Установка Toolbar как Action Bar
+        val navView: BottomNavigationView = binding.navView
 
-        handler.postDelayed({
-            if (isUserLoggedInOnce()) {
-                // User has logged in before, navigate to HomeScreen
-                startActivity(Intent(this, HomeScreen::class.java))
-            } else {
-                // User has not logged in before, show OnboardingScreen
-                startActivity(Intent(this, OnboardingScreen01::class.java))
-
-            }
-            finish()
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-        }, 2500L)
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+            )
+        )
+       // NavigationUI.setupActionBarWithNavController(this, navController);
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
     }
 
     private fun isUserLoggedInOnce(): Boolean {

@@ -1,3 +1,4 @@
+/*
 package com.example.todoapp.modules
 
 import android.content.Intent
@@ -26,7 +27,7 @@ class HomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+       binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.addNewBtn.setOnClickListener {
@@ -47,10 +48,12 @@ class HomeScreen : AppCompatActivity() {
                 filterTasks(s.toString())
             }
         })
+        &
+
     }
 
     private fun updateUI(tasks: List<Task>) {
-        recyclerView = binding.recyclerView
+       /* recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         taskAdapter = TaskAdapter(tasks, this)
         recyclerView.adapter = taskAdapter
@@ -61,7 +64,7 @@ class HomeScreen : AppCompatActivity() {
         } else {
             binding.emptyView.visibility = View.GONE
             binding.recyclerView.visibility = View.VISIBLE
-        }
+        }*/
     }
 
     private fun filterTasks(query: String) {
@@ -71,3 +74,4 @@ class HomeScreen : AppCompatActivity() {
         taskAdapter.updateTasks(filteredTasks)
     }
 }
+ */

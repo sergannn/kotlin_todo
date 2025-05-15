@@ -17,4 +17,9 @@
     <string name="onboard_screen_para">Грамотная организация приводит к невероятной продуктивности, помогая достигать целей быстрее и проще, чем когда-либо прежде.</string>
     <string name="onboard_txt_next">Выполняйте задачи без ограничений.</string>
     <string name="todo_list_txt">Список задач..</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_home">Все</string>
+    <string name="title_dashboard">Завтра</string>
+    <string name="title_notifications">Настройки</string>
 </resources>

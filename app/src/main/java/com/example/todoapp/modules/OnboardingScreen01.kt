@@ -23,9 +23,9 @@ class OnboardingScreen01 : AppCompatActivity() {
                 setUserLoggedInOnce()
             }
 
-            val intent = Intent(this, HomeScreen::class.java)
+         //   val intent = Intent(this, HomeScreen::class.java)
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-            startActivity(intent)
+         //   startActivity(intent)
         }
 
     }
