@@ -13,7 +13,7 @@
         android:layout_height="37dp"
         android:layout_marginTop="88dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Add notes.."
+        android:text="Добавить заметку.."
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
