@@ -1,10 +1,9 @@
 package com.example.todoapp.modules
 
-import HomeFragment
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,29 +18,23 @@ class AddNewTaskScreen : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddNoteBinding
     private lateinit var taskViewModel: TaskViewModel
-    private var taskDescription: String = ""
-    private var taskTitle: String = ""
-    private var dueDate: String = ""
-    private var dueTime: String = ""
     private val calendar = Calendar.getInstance()
-    private var homeFragment: HomeFragment? = null
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // Get reference to HomeFragment
-        homeFragment = supportFragmentManager.findFragmentByTag("HomeFragment") as? HomeFragment
-
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
+        // Initialize with current date/time
+        updateDueDateTextView()
+        updateDueTimeTextView()
+
         binding.doneBtn.setOnClickListener {
-            taskTitle = binding.taskTitle.text.toString()
-            taskDescription = binding.taskDescription.text.toString()
-            dueDate = binding.textViewDueDate.text.toString()
-            dueTime = binding.textViewDueTime.text.toString()
             saveTask()
         }
 
@@ -50,7 +43,7 @@ class AddNewTaskScreen : AppCompatActivity() {
     }
 
     private fun showDatePickerDialog() {
-        val datePickerDialog = DatePickerDialog(
+        DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
                 calendar.set(Calendar.YEAR, year)
@@ -61,17 +54,15 @@ class AddNewTaskScreen : AppCompatActivity() {
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
-        )
-        datePickerDialog.show()
+        ).show()
     }
 
     private fun updateDueDateTextView() {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        binding.textViewDueDate.text = dateFormat.format(calendar.time)
+        binding.textViewDueDate.setText(dateFormat.format(calendar.time))
     }
 
     private fun showTimePickerDialog() {
-        val timePickerDialog = TimePickerDialog(
+        TimePickerDialog(
             this,
             { _, hourOfDay, minute ->
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
@@ -81,16 +72,24 @@ class AddNewTaskScreen : AppCompatActivity() {
             calendar.get(Calendar.HOUR_OF_DAY),
             calendar.get(Calendar.MINUTE),
             true
-        )
-        timePickerDialog.show()
+        ).show()
     }
 
     private fun updateDueTimeTextView() {
-        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-        binding.textViewDueTime.text = timeFormat.format(calendar.time)
+        binding.textViewDueTime.setText(timeFormat.format(calendar.time))
     }
 
     private fun saveTask() {
+        val taskTitle = binding.taskTitle.text.toString().trim()
+        val taskDescription = binding.taskDescription.text.toString().trim()
+        val dueDate = binding.textViewDueDate.text.toString()
+        val dueTime = binding.textViewDueTime.text.toString()
+
+        if (taskTitle.isEmpty()) {
+            Toast.makeText(this, "Please enter task title", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val task = Task(
             taskTitle = taskTitle,
             taskDescription = taskDescription,
@@ -100,14 +99,6 @@ class AddNewTaskScreen : AppCompatActivity() {
 
         taskViewModel.insertTask(task)
         Toast.makeText(this, "Task Created Successfully", Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, "Task Created Successfully", Toast.LENGTH_SHORT).show()
-
-        // Refresh HomeFragment if it exists
-//        homeFragment?.refreshScreen()
-
-      //   updateTasks(tasks)
-      //  startActivity(Intent(this, HomeScreen::class.java))
         finish()
     }
-
 }

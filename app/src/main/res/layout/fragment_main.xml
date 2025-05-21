@@ -76,9 +76,9 @@
         android:id="@+id/refreshFab"
         android:layout_width="68dp"
         android:layout_height="67dp"
+        android:background="#8E5A5A"
         android:text="refresh"
-        app:srcCompat="@drawable/baseline_compare_arrows_24"
-      />
+        app:srcCompat="@drawable/baseline_compare_arrows_24" />
     <ImageView
         android:id="@+id/add_new_btn"
         android:layout_width="68dp"

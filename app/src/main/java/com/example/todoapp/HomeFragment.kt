@@ -1,7 +1,11 @@
+import android.app.DatePickerDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +18,10 @@ import com.example.todoapp.databinding.FragmentMainBinding
 import com.example.todoapp.model.Task
 import com.example.todoapp.viewModel.TaskViewModel
 import com.google.android.material.tabs.TabLayout
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import androidx.core.graphics.drawable.toDrawable
 
 class HomeFragment : Fragment() {
     private lateinit var viewPager: ViewPager2
@@ -93,7 +101,90 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 }
+
 class AddTaskDialogFragment : DialogFragment() {
+    private var listener: ((Task) -> Unit)? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = ActivityAddNoteBinding.inflate(inflater, container, false)
+
+        // Настройка прозрачности фона
+        dialog?.window?.apply {
+            // Уменьшаем прозрачность для лучшей видимости
+            setBackgroundDrawable(Color.BLACK.toDrawable())
+//            setBackgroundDrawable(ColorDrawable(Color.argb(200, 0, 0, 0)))
+            setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        }
+
+        // Улучшаем видимость элементов
+        binding.textView4.apply {
+            setTextColor(Color.BLUE)
+            setTextSize(24f)
+        }
+
+        // Настройка полей ввода
+        binding.taskTitle.apply {
+            setTextColor(Color.BLUE)
+            highlightColor = Color.GREEN
+        }
+
+        binding.taskDescription.apply {
+            setTextColor(Color.BLUE)
+            highlightColor = Color.GREEN
+        }
+
+        // Добавляем выбор даты
+        binding.textViewDueDate.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            DatePickerDialog(
+                requireContext(),
+                { _, selectedYear, selectedMonth, selectedDay ->
+                    val selectedDate = Calendar.getInstance().apply {
+                        set(selectedYear, selectedMonth, selectedDay)
+                    }
+
+                    binding.textViewDueDate.setText(
+                        SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate.time)
+                    )
+                },
+                year,
+                month,
+                day
+            ).show()
+        }
+
+        binding.doneBtn.setOnClickListener {
+            val newTask = Task(
+                taskTitle = binding.taskTitle.text.toString(),
+                taskDescription = binding.taskDescription.text.toString(),
+                dueTime = binding.textViewDueTime.text.toString(),
+                dueDate = binding.textViewDueDate.text.toString()
+            )
+            listener?.invoke(newTask)
+            dismiss()
+        }
+
+        return binding.root
+    }
+
+    fun setOnTaskAddedListener(listener: (Task) -> Unit) {
+        this.listener = listener
+    }
+}
+class AddTaskDialogFragment2 : DialogFragment() {
     private var listener: ((Task) -> Unit)? = null
 
     fun setOnTaskAddedListener(listener: (Task) -> Unit) {

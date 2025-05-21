@@ -1,113 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="300dp"
-    android:background="@color/white"
+    android:background="@color/material_dynamic_secondary50"
+    android:fitsSystemWindows="true"
     tools:context=".modules.AddNewTaskScreen">
 
+    <!-- Header Text -->
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="169dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="88dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
         android:fontFamily="@font/poppins_medium"
         android:text="Добавить заметку.."
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/done_btn"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/done_btn" />
-
-    <LinearLayout
+    <!-- Form Container -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="204dp"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/done_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
 
-        <RelativeLayout
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:background="@drawable/container"
-            android:gravity="center_vertical"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
 
-            <EditText
-                android:id="@+id/task_title"
+            <!-- Title Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:ems="10"
-                android:hint="@string/hint_title_txt"
-                android:inputType="text"
-                android:minHeight="48dp"
-                android:textSize="20sp" />
-        </RelativeLayout>
+                android:layout_marginBottom="16dp"
+                android:hint="@string/hint_title_txt">
 
-        <RelativeLayout
-            android:layout_width="360dp"
-            android:layout_height="230dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/container_txt_area_bg"
-            android:gravity="top|center_vertical"
-            android:padding="15dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/task_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/task_description"
+            <!-- Description Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:ems="10"
-                android:gravity="start|top"
+                android:layout_height="200dp"
                 android:hint="@string/description_hint_txt"
-                android:inputType="textMultiLine"
-                android:minHeight="48dp"
-                android:textSize="20sp" />
-        </RelativeLayout>
+                app:boxBackgroundMode="outline">
 
-        <TextView
-            android:id="@+id/textViewDueDate"
-            android:layout_width="360dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/calender_input"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:hint="Pick a Due Date"
-            android:padding="8dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/task_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/textViewDueTime"
-            android:layout_width="360dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/time_input"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:hint="Pick a Due Time"
-            android:padding="8dp" />
+            <!-- Date Picker -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Pick a Due Date">
 
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textViewDueDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Time Picker -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Pick a Due Time">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textViewDueTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Done Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/done_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/done_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
